@@ -7,6 +7,7 @@
 """
 from enum import Enum
 
+from src.courses import Courses
 
 class Institutes(Enum):
     FTI = (0, 'Физико-технологический институт')
@@ -25,14 +26,24 @@ class Institutes(Enum):
 
 
 class Schedule:
-    def __init__(self):
-        """Базовый класс для Расписания."""
+    def __init__(
+            self,
+            parsed_courses=None,
+            *args,
+            **kwargs,
+
+    ):
+        """Базовый класс для Расписания.
+
+        :param courses: Спарсенное расписание курсов.
+        :param *args: Доп элементы.
+        :param **kwargs: Доп элементы типа {ключ: значение}.
+        """
+        self.courses = Courses(parsed_courses)
 
 
 class Fti(Schedule):
-    def __init__(self):
-        """Класс для работы с институтом ФТИ."""
-        super().__init__()
+    ...
 
 
 class Itigu(Schedule):
@@ -48,7 +59,8 @@ class Ik(Schedule):
 
 
 class Ikbisp(Schedule):
-    ...
+    def __init__(self):
+        super().__init__()
 
 
 class Irits(Schedule):
