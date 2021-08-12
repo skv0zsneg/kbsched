@@ -5,7 +5,7 @@ import kbsched
 
 class GetScheduleCases(unittest.TestCase):
     def setUp(self):
-        self.schedule = kbsched.get()
+        self.schedule = kbsched.get_s()
 
     def tearDown(self):
         ...

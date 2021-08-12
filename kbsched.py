@@ -1,17 +1,14 @@
 """
     made by @skvozsneg
 """
-DB_FILE = 'scded.db'
+from core import init_bd
+
+DB_FILE_NAME = 'kb.db'
 
 
-def get():
-    try:
-        rf = open(DB_FILE, 'r')
-    except FileNotFoundError:
-        with open(DB_FILE, 'w'):
-            pass
-        rf = open(DB_FILE, 'r')
+def get_s():
+    db = init_bd(DB_FILE_NAME)
 
 
 if __name__ == "__main__":
-    get()
+    get_s()
