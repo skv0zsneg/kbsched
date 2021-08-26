@@ -4,7 +4,7 @@
 from .sql_db import DbHandler
 
 
-def init_bd(db_file_name: str):
+def init_bd(db_file_name: str) -> DbHandler:
     """Инициализация Базы даынных.
 
     :param db_file_name: Полное имя базы данных.
