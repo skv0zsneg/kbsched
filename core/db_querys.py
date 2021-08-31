@@ -50,35 +50,44 @@ CREATE_LESSON_TIME_TABLE = """
     )
 """
 
+# TODO: MUST BE FIXED sqlite3.OperationalError: near "week_id": syntax error
+
 CREATE_SCHEDULE_TABLE = """
     CREATE TABLE IF NOT EXISTS schedule (
-        sch_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        FOREIGN KEY (dw_id) 
-            REFERENCES day_of_week (dw_id)
+        schedule_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        day_of_week_id INTEGER,
+        FOREIGN KEY (day_of_week_id) 
+            REFERENCES day_of_week (day_of_week_id)
             ON DELETE CASCADE
             ON UPDATE NO ACTION,
+        week_id INTEGER,
         FOREIGN KEY (week_id) 
             REFERENCES week (week_id)
             ON DELETE CASCADE
             ON UPDATE NO ACTION,
-        FOREIGN KEY (lt_id) 
-            REFERENCES lesson_time (lt_id)
+        lesson_time_id INTEGER,
+        FOREIGN KEY (lesson_time_id) 
+            REFERENCES lesson_time (lesson_time_id)
             ON DELETE CASCADE
             ON UPDATE NO ACTION,
-        FOREIGN KEY (sub_id) 
-            REFERENCES subject (sub_id)
+        subject_id INTEGER,
+        FOREIGN KEY (subject_id) 
+            REFERENCES subject (subject_id)
             ON DELETE CASCADE
             ON UPDATE NO ACTION,
-        FOREIGN KEY (st_id) 
-            REFERENCES sub_type (st_id)
+        sub_type_id INTEGER,
+        FOREIGN KEY (sub_type_id) 
+            REFERENCES sub_type (sub_type_id)
             ON DELETE CASCADE
             ON UPDATE NO ACTION,
-        FOREIGN KEY (tch_id) 
-            REFERENCES teacher (tch_id)
+        teacher_id INTEGER,
+        FOREIGN KEY (teacher_id) 
+            REFERENCES teacher (teacher_id)
             ON DELETE CASCADE
             ON UPDATE NO ACTION,
-        FOREIGN KEY (kg_id)
-            REFERENCES kbsp_group (kg_id)
+        kbsp_group_id INTEGER,
+        FOREIGN KEY (kbsp_group_id)
+            REFERENCES kbsp_group (kbsp_group_id)
             ON DELETE CASCADE
             ON UPDATE NO ACTION                             
     )
@@ -95,4 +104,3 @@ create_tables_list = [
     CREATE_LESSON_TIME_TABLE,
     CREATE_SCHEDULE_TABLE
 ]
-

@@ -4,6 +4,7 @@
 from core import init_bd
 
 
+DB_FILE_NAME = 'kb.db'
 
 
 def get_s():
