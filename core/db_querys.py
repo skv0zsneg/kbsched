@@ -89,24 +89,3 @@ def insert_into_schedule_table_query(day_of_week_id: str,
 #############################
 # END: Insert table query's #
 #############################
-
-
-###########################
-# START: Lists of query's #
-###########################
-
-create_tables_list = [
-    CREATE_TEACHER_TABLE,
-    CREATE_KBSP_GROUP_TABLE,
-    CREATE_DAY_OF_THE_WEEK_TABLE,
-    CREATE_SUBJECT_TABLE,
-    CREATE_WEEK_TABLE,
-    CREATE_SUBJECT_TYPE_TABLE,
-    CREATE_LESSON_TIME_TABLE,
-    CREATE_SCHEDULE_TABLE,
-    CREATE_COURSE_TABLE
-]
-
-#########################
-# END: Lists of query's #
-#########################
