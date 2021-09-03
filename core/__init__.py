@@ -13,3 +13,6 @@ def init_bd(db_file_name: str) -> SqliteStorage:
     return SqliteStorage(db_file_name=db_file_name)
 
 
+def init_upd(): ...
+
+

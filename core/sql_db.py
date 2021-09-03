@@ -10,11 +10,14 @@ from .db_querys import (create_tables_list,
                         insert_into_schedule_table_query,
                         insert_into_sub_type_table_query,
                         insert_into_subject_table_query,
-                        insert_into_teacher_table_query)
+                        insert_into_teacher_table_query,
+                        insert_into_course_table_query)
 
-from .utils import (DayOfTheWeekDefault,
+from .enums import (DayOfTheWeekDefault,
                     LessonTimeDefault,
-                    WeekDefault)
+                    WeekDefault,
+                    CourseDefault,
+                    DbCreateTableQuery)
 
 
 class DbHandler:
@@ -40,7 +43,7 @@ class SqliteStorage:
 
         # -- initialize db --
         if db_file_name not in listdir(self.db_handler.path):
-            self.db_handler.execute(*create_tables_list)
+            self.db_handler.execute(*DbCreateTableQuery.get_all_create_table_query())
             self.fill_table_with_default_values()
 
     def fill_table_with_default_values(self):
@@ -51,6 +54,8 @@ class SqliteStorage:
         for field in LessonTimeDefault:
             self.db_handler.execute(insert_into_lesson_time_table_query(lesson_time_from=field.time_from,
                                                                         lesson_time_to=field.time_to))
+        for field in CourseDefault:
+            self.db_handler.execute(insert_into_course_table_query(course_number=field.number_int))
 
     def insert_into_schedule_table(self): ...
 
