@@ -2,8 +2,7 @@ import sqlite3
 from os import path, listdir
 from contextlib import contextmanager
 
-from .db_querys import (create_tables_list,
-                        insert_into_week_table_query,
+from .db_querys import (insert_into_week_table_query,
                         insert_into_day_of_week_table_query,
                         insert_into_kbsp_group_table_query,
                         insert_into_lesson_time_table_query,
