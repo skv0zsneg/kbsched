@@ -105,6 +105,48 @@ class DbCreateTableQuery(enum.Enum):
         return tuple(field.query for field in list(DbCreateTableQuery))
 
 
+class DbInsertIntoTableQuery(enum.Enum):
+    INSERT_INTO_TEACHER_TABLE = """
+        INSERT INTO teacher
+        VALUES (?,?)
+    """
+    INSERT_INTO_KBSP_GROUP_TABLE = """
+        INSERT INTO kbsp_group
+        VALUES (?,?)
+    """
+    INSERT_INTO_DAY_OF_THE_WEEK_TABLE = """
+        INSERT INTO day_of_week
+        VALUES (?,?)
+    """
+    INSERT_INTO_SUBJECT_TABLE = """
+        INSERT INTO subject
+        VALUES (?,?)
+    """
+    INSERT_INTO_WEEK_TABLE = """
+        INSERT INTO week
+        VALUES (?,?)
+    """
+    INSERT_INTO_SUB_TYPE_TABLE = """
+        INSERT INTO sub_type
+        VALUES (?,?)
+    """
+    INSERT_INTO_LESSON_TIME_TABLE = """
+        INSERT INTO lesson_time
+        VALUES (?,?,?)
+    """
+    INSERT_INTO_COURSE_TABLE = """
+        INSERT INTO course
+        VALUES (?,?)
+    """
+    INSERT_INTO_SCHEDULE_TABLE = """
+        INSERT INTO schedule
+        VALUES (?,?,?,?,?,?,?,?,?)
+    """
+
+    def __init__(self, query):
+        self.query = query
+
+
 class WeekDefault(enum.Enum):
     ODD = (0, 'I', False)
     EVEN = (1, 'II', True)
