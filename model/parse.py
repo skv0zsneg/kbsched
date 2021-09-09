@@ -19,8 +19,17 @@ class SqlPyTypes(Enum):
         return [v.sql_type for v in SqlPyTypes]
 
     @staticmethod
-    def get_pi_types() -> List[None, type]:
+    def get_pi_types() -> List[Union[None, type]]:
         return [v.pi_type for v in SqlPyTypes]
+
+
+SQL_TYPES = Literal[SqlPyTypes.T_BYTES.sql_type, 
+                    SqlPyTypes.T_FLOAT.sql_type, 
+                    SqlPyTypes.T_INT.sql_type, 
+                    SqlPyTypes.T_STR.sql_type,
+                    SqlPyTypes.T_NONE.sql_type]
+
+Field: namedtuple = namedtuple('Field', ['field_name', 'field_type', 'field_params'])
 
 
 class Queries:
@@ -40,15 +49,9 @@ class Queries:
 
 
 class TableHandler:
-    Field: namedtuple = namedtuple('Fields', ['field_name', 'field_type', 'field_params'])
-    SQL_TYPES = Literal['INTEGER', 'NULL', 'REAL', 'TEXT', 'BLOB']
-
     def __init__(self,
                  table_name: str,
-                 table_fields: List[
-                     Tuple[str, Union[type, None, SQL_TYPES], str],
-                     Field
-                 ]):
+                 table_fields: Tuple[str, str, Optional[str]]):
         self.table_name = table_name
         self.table_fields = table_fields
 
