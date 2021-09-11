@@ -1,5 +1,4 @@
 import sqlite3
-import typing
 from os import path, listdir
 from contextlib import contextmanager
 
