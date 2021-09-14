@@ -71,8 +71,11 @@ SCHEDULE_FOREIGN_KEYS_DATA = [('day_of_the_week_id',
                               ('course_id',
                                'course',
                                'ON DELETE CASCADE ON UPDATE NO ACTION')]
-
-
+SCHEDULE_LINKS_DATA = ('schedule_links', [
+        ('schedule_links_id', 'INTEGER', 'PRIMARY KEY AUTOINCREMENT'),
+        ('course_number', 'TEXT', 'NOT NULL'),
+        ('schedule_link', 'TEXT', 'NOT NULL')
+    ])
 
 
 class KbschedModel:
@@ -88,6 +91,7 @@ class KbschedModel:
         self.lesson_time_table = TableHandler(*LESSON_TIME_DATA)
         self.course_table = TableHandler(*COURSE_DATA)
         self.schedule_table = TableHandler(*SCHEDULE_DATA)
+        self.schedule_links_table = TableHandler(*SCHEDULE_LINKS_DATA)
     
     def create_tables(self):
         self.db.execute(self.teacher_table.create_table(if_not_exist=True))
@@ -99,6 +103,7 @@ class KbschedModel:
         self.db.execute(self.lesson_time_table.create_table(if_not_exist=True))
         self.db.execute(self.course_table.create_table(if_not_exist=True))
         self.db.execute(self.schedule_table.create_table(foreign_keys=SCHEDULE_FOREIGN_KEYS_DATA, if_not_exist=True))
+        self.db.execute(self.schedule_links_table.create_table(if_not_exist=True))
     
     def fill_default(self):
         for val in DayOfTheWeekDefault:
