@@ -1,4 +1,5 @@
+kb_model/__pycache__
+kb_controller/__pycache__
 venv
-model/__pycache__
 .mypy_cache
-model/*.db
+kb_model/*.db

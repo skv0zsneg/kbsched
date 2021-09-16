@@ -20,6 +20,7 @@ class DbHandler:
         with self.__cursor() as cur:
             for q in query:
                 cur.execute(q)
+        return cur.fetchall()
 
     def initialize(self):
         if self.__db_file_name not in listdir(self.path):
