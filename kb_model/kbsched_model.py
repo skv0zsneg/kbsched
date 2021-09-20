@@ -73,7 +73,7 @@ SCHEDULE_FOREIGN_KEYS_DATA = [('day_of_the_week_id',
                                'ON DELETE CASCADE ON UPDATE NO ACTION')]
 SCHEDULE_LINKS_DATA = ('schedule_links', [
         ('schedule_links_id', 'INTEGER', 'PRIMARY KEY AUTOINCREMENT'),
-        ('course_number', 'INTEGER', 'NOT NULL'),
+        ('course_name', 'TEXT', 'NOT NULL'),
         ('schedule_link', 'TEXT', 'NOT NULL')
     ])
 
@@ -117,3 +117,6 @@ class KbschedModel:
     
     def get_all_elements(self, table: TableHandler) -> bool:
         return bool(self.db.execute(f'SELECT * FROM {table.table_name}'))
+
+    def get_elements(self, *elements, table: TableHandler, where: str = None):
+        return self.db.execute(f"SELECT {', '.join(elements)} FROM {table.table_name} WHERE {where}")

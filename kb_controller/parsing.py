@@ -1,4 +1,7 @@
+import openpyxl
+from os import path
 from typing import Any
+from typing import Union
 from requests import get
 from bs4 import BeautifulSoup
 from collections import defaultdict
@@ -32,14 +35,25 @@ class GetSchedule:
 
     def get_links(self):
         course_links = self.parse.get_links_for_courses()
-        for course_number, links in course_links.items():
+        for course_name, links in course_links.items():
             for link in links:
-                # TODO: Пересмотреть логику связи таблиц в БД.
                 self.kb_model.db.execute(
-                    self.kb_model.schedule_links_table.insert_into('NULL', course_number, link)
+                    self.kb_model.schedule_links_table.insert_into('NULL', course_name, link)
                 )
 
+    def parse_all(self):
+        for link in self.kb_model.get_elements('schedule_link', table=self.kb_model.schedule_links_table):
+            print(link)
 
-# if __name__ == "__main__":
-#     p = Parse('https://www.mirea.ru/schedule/')
-#     print(p.get_links_for_courses())
+    def parse_for_course(self, course: Union[int, str]):
+        course = int(course[0]) if isinstance(course, str) else course
+        link = self.kb_model.get_elements('schedule_link',
+                                          table=self.kb_model.schedule_links_table,
+                                          where=f"course_name == '{str(course)} курс'")[0][0]
+        with open(path.join(path.split(__file__)[0], f'schedule.{FILE_FORMAT}'), 'wb') as f:
+            f.write(get(link).content)
+
+
+if __name__ == "__main__":
+    p = Parse('https://www.mirea.ru/schedule/')
+    print(p.get_links_for_courses())
