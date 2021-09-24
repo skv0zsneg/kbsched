@@ -19,4 +19,4 @@ class KbschedController:
         if not self.kb_model.get_all_elements(self.kb_model.schedule_links_table):
             self.parsing.get_links()
         if not self.kb_model.get_all_elements(self.kb_model.schedule_table):
-            self.parsing.parse_for_course(5)
+            self.parsing.parse_for_course(2)

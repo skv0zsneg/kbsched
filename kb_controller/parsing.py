@@ -1,14 +1,17 @@
-import openpyxl
 from os import path
 from typing import Any
 from typing import Union
 from requests import get
 from bs4 import BeautifulSoup
+from openpyxl import load_workbook
 from collections import defaultdict
+from openpyxl.utils import get_column_letter
 
 
 KEY_WORD_INSTITUTES = ('КБиСП',)
 FILE_FORMAT = '.xlsx'
+FILE_NAME_FOR_CURRENT_SCHEDULE = 'schedule' + FILE_FORMAT
+CURRENT_PATH = path.split(__file__)[0]
 
 
 class Parse:
@@ -23,8 +26,6 @@ class Parse:
                 course_number = bs_link.find('div', attrs={'class': 'uk-link-heading uk-margin-small-top'})
                 course_links[course_number.text.strip()].append(href)
         return course_links
-
-    def get_all_values_for_course(self): ...
 
 
 class GetSchedule:
@@ -45,15 +46,13 @@ class GetSchedule:
         for link in self.kb_model.get_elements('schedule_link', table=self.kb_model.schedule_links_table):
             print(link)
 
-    def parse_for_course(self, course: Union[int, str]):
+    def parse_all_for_course(self, course: Union[int, str]):
         course = int(course[0]) if isinstance(course, str) else course
-        link = self.kb_model.get_elements('schedule_link',
-                                          table=self.kb_model.schedule_links_table,
-                                          where=f"course_name == '{str(course)} курс'")[0][0]
-        with open(path.join(path.split(__file__)[0], f'schedule.{FILE_FORMAT}'), 'wb') as f:
-            f.write(get(link).content)
-
-
-if __name__ == "__main__":
-    p = Parse('https://www.mirea.ru/schedule/')
-    print(p.get_links_for_courses())
+        for link in self.kb_model.get_elements('schedule_link',
+                                               table=self.kb_model.schedule_links_table,
+                                               where=f"course_name == '{str(course)} курс'")[0]:
+            with open(path.join(CURRENT_PATH, f'{FILE_NAME_FOR_CURRENT_SCHEDULE}'), 'wb') as f:
+                f.write(get(link).content)
+            wb = load_workbook(FILE_NAME_FOR_CURRENT_SCHEDULE)
+            list_1 = wb.active
+            print(list_1['F5'].value)
